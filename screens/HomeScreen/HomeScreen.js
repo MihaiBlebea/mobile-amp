@@ -1,13 +1,20 @@
 import React from 'react';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { Text, View, Button } from 'react-native';
-import { InputText } from '../../components/exports.js';
+import { StackNavigator, TabNavigator } from 'react-navigation';
+import { InputText, Header } from '../../components/exports.js';
+
+
 
 class HomeScreen extends React.Component
 {
     static navigationOptions = {
-        title: 'Home screen',
+        tabBarLabel: 'Home',
+        tabBarIcon: ({ tintColor }) => (
+            <Icon name="bath" size={30} color="#900" />
+        ),
     };
 
     state = {
@@ -41,11 +48,10 @@ class HomeScreen extends React.Component
     render()
     {
         const { navigate } = this.props.navigation;
+
         return (
             <View>
-                <Text>
-                    Please delete the name below and insert your own:
-                </Text>
+                <Header />
                 <InputText
                     value={this.state.text}
                     change={(event) => this.inputChangeHandler(event)} />

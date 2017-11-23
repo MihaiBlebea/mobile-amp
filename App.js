@@ -1,32 +1,23 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    View } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+
+import { TabNavigator } from 'react-navigation';
 import { HomeScreen, ProgramScreen } from './screens/exports.js';
 
-// Navigation map
-const SimpleApp = StackNavigator({
+const TabNav = TabNavigator({
     Home: { screen: HomeScreen },
-    Program: { screen: ProgramScreen }
+    Notifications: { screen: ProgramScreen }
+}, {
+    tabBarPosition: 'bottom',
+    animationEnabled: true,
+    tabBarOptions: { activeTintColor: '#e91e63' },
 });
 
 class App extends React.Component {
     render() {
         return (
-            <SimpleApp />
+            <TabNav />
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
 
 export default App;

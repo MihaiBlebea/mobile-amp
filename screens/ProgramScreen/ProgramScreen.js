@@ -1,33 +1,33 @@
 import React from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import {
     Text,
     View,
     Image,
     StyleSheet } from 'react-native';
+import { StackNavigator, TabNavigator } from 'react-navigation';
+import { Header } from '../../components/exports.js';
 
 class ProgramScreen extends React.Component
 {
     static navigationOptions = {
-        title: 'Program screen'
-    };
+        tabBarLabel: 'Programe',
+        tabBarIcon: ({ tintColor }) => (
+            <Icon name="rocket" size={30} color="#900" />
+        ),
+    }
 
     render()
     {
         const { params } = this.props.navigation.state;
 
-        let check = (params.name === 'Florin' || params.name === 'florin') ? 'Florinache esti lache?' : `${params.name} esti baiat bun`;
-        let imageFlorin = 'http://www.screengeek.net/wp-content/uploads/2016/07/borat.jpg';
-        let imageSerban = 'http://www.hoodedutilitarian.com/wp-content/uploads/2016/03/latest.jpg';
-        let displayImage = (params.name === 'Florin' || params.name === 'florin') ? imageFlorin : imageSerban;
-
         return (
             <View>
+                <Header />
                 <Text style={styles.titleText}>
-                    { check }
+                    Serban
                 </Text>
-                <Image
-                    style={styles.image}
-                    source={{ uri: displayImage }} />
             </View>
         );
     }
