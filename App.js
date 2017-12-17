@@ -1,11 +1,13 @@
 import React from 'react';
 
+import { StatusBar } from 'react-native';
 import { TabNavigator } from 'react-navigation';
-import { HomeScreen, ProgramScreen } from './screens/exports.js';
+import { HomeScreen, ProgramScreen, LoginScreen } from './screens/exports.js';
 
 const TabNav = TabNavigator({
     Home: { screen: HomeScreen },
-    Notifications: { screen: ProgramScreen }
+    Programs: { screen: ProgramScreen },
+    Login: { screen: LoginScreen }
 }, {
     tabBarPosition: 'bottom',
     animationEnabled: true,
@@ -13,6 +15,12 @@ const TabNav = TabNavigator({
 });
 
 class App extends React.Component {
+
+    componentDidMount() {
+       StatusBar.setHidden(true);
+       alert('app mounted');
+    }
+
     render() {
         return (
             <TabNav />

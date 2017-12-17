@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { Text, View, Button } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
-import { InputText, Header } from '../../components/exports.js';
+import { InputText, Header, StyledButton } from '../../components/exports.js';
 
 
 
@@ -18,7 +18,7 @@ class HomeScreen extends React.Component
     };
 
     state = {
-        text: 'Serban',
+        text: 'AMP',
         title: null,
         body: null
     }
@@ -55,7 +55,7 @@ class HomeScreen extends React.Component
                 <InputText
                     value={this.state.text}
                     change={(event) => this.inputChangeHandler(event)} />
-                <Button
+                <StyledButton
                     onPress={ () => navigate('Program', { name: this.state.text }) }
                     title="Check result!"
                     color="#ea1717"

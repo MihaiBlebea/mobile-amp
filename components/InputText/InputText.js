@@ -1,25 +1,26 @@
 import React from 'react';
-import { AppRegistry, TextInput } from 'react-native';
+import { AppRegistry, TextInput, StyleSheet } from 'react-native';
 
-class InputText extends React.Component
+function InputText(props)
 {
-    // constructor(props)
-    // {
-    //     super(props);
-    //     this.state = {
-    //         text: 'Serban'
-    //     };
-    // }
-
-    render()
-    {
-        return (
-            <TextInput
-                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                onChangeText={this.props.change.bind(this)}
-                value={this.props.value}/>
-        );
-    }
+    return (
+        <TextInput
+            style={styles.input}
+            onChangeText={props.change.bind(this)}
+            value={props.value}/>
+    );
 }
+
+const styles = StyleSheet.create({
+    input: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1 ,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        paddingLeft: 10,
+        paddingRight: 10
+    }
+});
 
 export default InputText;
