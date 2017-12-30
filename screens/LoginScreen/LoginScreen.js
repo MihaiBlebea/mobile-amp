@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { View, Text, StyleSheet } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
-import { InputText, StyledButton } from '../../components/exports.js';
+import { InputText, StyledButton, Loader, ErrorMessage } from '../../components/exports.js';
 
 class LoginScreen extends React.Component
 {
@@ -17,9 +17,11 @@ class LoginScreen extends React.Component
 
     state = {
         api: 'https://antrenorulmeupersonal.ro/app-api/getAntrForUser.php',
-        username: '',
-        password: '',
-        data: null
+        username: 'tester.aplicatie@yahoo.com',
+        password: 'AMi665hVRZ',
+        data: null,
+        loading: false,
+        error: false
     }
 
     passwordHandler(event)
@@ -38,14 +40,31 @@ class LoginScreen extends React.Component
         });
     }
 
+    toggleLoading()
+    {
+        let loading = this.state.loading;
+        this.setState({
+            loading: !loading
+        });
+    }
+
     credentialsHandler()
     {
         if(this.state.username !== '' && this.state.password !== '')
         {
+            this.toggleLoading();
             axios.get(this.state.api + '?email=' + this.state.username + '&pwd=' + this.state.password).then((response)=> {
-                this.setState({
-                    data: response.data
-                })
+                if(response.message === 'Parola Invalida')
+                {
+                    this.setState({
+                        error: true
+                    })
+                } else {
+                    this.setState({
+                        data: response.data
+                    })
+                }
+                this.toggleLoading();
             }).catch((err)=> {
                 alert(JSON.stringify(err))
             })
@@ -56,6 +75,11 @@ class LoginScreen extends React.Component
     {
         return (
             <View style={styles.container}>
+
+                <Loader isLoading={this.state.loading}/>
+                <ErrorMessage isShowing={this.state.error}
+                              type={'error'}>Datele introduse nu sunt valabile</ErrorMessage>
+
                 <View style={styles.form}>
                     <View style={styles.content}>
                         <Text style={styles.label}>Username:</Text>

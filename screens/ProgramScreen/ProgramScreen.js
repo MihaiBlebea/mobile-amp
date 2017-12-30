@@ -8,6 +8,7 @@ import {
     StyleSheet } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { Header } from '../../components/exports.js';
+import { Wrap } from '../../layouts/exports.js';
 
 class ProgramScreen extends React.Component
 {
@@ -20,14 +21,16 @@ class ProgramScreen extends React.Component
 
     render()
     {
-        const { params } = this.props.navigation.state;
+        const { navigate } = this.props.navigation;
 
         return (
             <View>
-                <Header />
-                <Text style={styles.titleText}>
-                    Serban
-                </Text>
+                <Header toggleMenu={this.props.navigation}/>
+                <Wrap>
+                    <Text style={styles.titleText}>
+                        Serban
+                    </Text>
+                </Wrap>
             </View>
         );
     }
