@@ -2,7 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { Text, View, Button, AsyncStorage } from 'react-native';
+import * as localStore from '../../localStore/localStore.js';
+import { Text, View, Button, AsyncStorage, NetInfo } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { InputText, Header, StyledButton } from '../../components/exports.js';
 import { Wrap } from '../../layouts/exports.js';
@@ -19,25 +20,33 @@ class HomeScreen extends React.Component
     state = {
         text: 'AMP',
         title: null,
-        body: null
+        body: null,
+        connected: false
+    }
+
+    componentWillMount()
+    {
+        localStore.getData('isLogged', (result)=> {
+            if(result == null)
+            {
+                this.props.navigation.navigate('Login');
+            }
+        })
     }
 
     componentDidMount()
     {
-        this.saveData();
-    }
-
-    saveData()
-    {
-        AsyncStorage.setItem('UID123', 'Serban', () => {
-            console.log('saved')
+        NetInfo.isConnected.fetch().then(isConnected => {
+            console.log('First, is ' + (isConnected ? 'online' : 'offline'));
         });
+
+        NetInfo.isConnected.addEventListener('connectionChange', this.handleConectivityChange);
     }
 
-    getData()
+    handleConectivityChange()
     {
-        AsyncStorage.getItem('UID123', (err, result) => {
-            console.log(result);
+        NetInfo.isConnected.fetch().then(isConnected => {
+            console.log('First, is ' + (isConnected ? 'online' : 'offline'));
         });
     }
 
@@ -49,7 +58,13 @@ class HomeScreen extends React.Component
             <View>
                 <Header toggleMenu={this.props.navigation}/>
                 <Wrap>
-                    <Text onPress={()=> this.getData()}>Serban</Text>
+                    <Text>Serban</Text>
+                    <Text>This mobile device is {this.state.connected}</Text>
+                    <StyledButton onPress={()=> localStore.saveData('Florinel', {name: 'Florinel', job: 'Screw seller'}) } title={'Save data'}/>
+                    <StyledButton onPress={()=> localStore.getData('Florinel', (result)=> {console.log(result)})} title={'Get Data'}/>
+                    <StyledButton onPress={()=> localStore.getAllKeys()} title={'Get Keys'}/>
+                    <StyledButton onPress={()=> localStore.mergeData('Florinel', {hillbilly: true})} title={'Merge'}/>
+                    <StyledButton onPress={()=> localStore.clearData()} title={'Clear'}/>
                 </Wrap>
             </View>
         );

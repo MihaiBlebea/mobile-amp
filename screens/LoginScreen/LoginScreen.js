@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import * as localStore from '../../localStore/localStore.js';
 import { View, Text, StyleSheet } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { InputText, StyledButton, Loader, ErrorMessage } from '../../components/exports.js';
@@ -54,19 +55,19 @@ class LoginScreen extends React.Component
         {
             this.toggleLoading();
             axios.get(this.state.api + '?email=' + this.state.username + '&pwd=' + this.state.password).then((response)=> {
-                if(response.message === 'Parola Invalida')
-                {
-                    this.setState({
-                        error: true
-                    })
-                } else {
-                    this.setState({
-                        data: response.data
-                    })
-                }
-                this.toggleLoading();
+                localStore.saveData('isLogged', {
+                    isLogged: true,
+                    username: this.state.username,
+                    password: this.state.password
+                });
+                this.props.navigation.goBack();
+                // this.toggleLoading();
             }).catch((err)=> {
-                alert(JSON.stringify(err))
+                this.setState({
+                    error: true
+                })
+                this.toggleLoading();
+                console.log(JSON.stringify(err))
             })
         }
     }
