@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         backgroundColor: 'rgba(0,0,0,0.8)',
-        zIndex: 20
+        zIndex: 100
     },
     innerContainer: {
         marginTop: '50%',

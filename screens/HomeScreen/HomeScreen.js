@@ -3,30 +3,13 @@ import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import * as localStore from '../../localStore/localStore.js';
-import { Text, View, Button, AsyncStorage, NetInfo } from 'react-native';
+import { View, AsyncStorage, NetInfo } from 'react-native';
 import { InputText, HeaderTwin, StyledButton } from '../../components/exports.js';
 import { Wrap } from '../../layouts/exports.js';
+import { Card, Button, Text } from 'react-native-elements';
 
 class HomeScreen extends React.Component
 {
-    static navigationOptions = {
-        tabBarLabel: 'Home',
-        tabBarIcon: ({ tintColor }) => (
-            <Icon name="bath" size={20} color="#900" />
-        ),
-        drawerLabel: 'Home',
-        drawerIcon: ({ tintColor }) => (
-            <Icon name="bath" size={30} color="#900" />
-        ),
-    };
-
-    state = {
-        text: 'AMP',
-        title: null,
-        body: null,
-        connected: false
-    }
-
     componentWillMount()
     {
         localStore.getData('isLogged', (result)=> {
@@ -39,18 +22,30 @@ class HomeScreen extends React.Component
 
     render()
     {
+        let payload = [
+            {key: 'key1', value: {name: 'Cristina', job: 'Media buyer'}},
+            {key: 'key2', value: {name: 'Serban', job: 'Developer'}},
+            {key: 'key3', value: {name: 'Horia', job: 'Time waster'}}
+        ];
+
         return (
             <View>
                 <HeaderTwin toggleMenu={this.props.navigation}/>
                 <Wrap>
                     <Text>Serban</Text>
-                    <Text>This mobile device is {this.state.connected}</Text>
                     <StyledButton onPress={()=> localStore.saveData('Florinel', {name: 'Florinel', job: 'Screw seller'}) } title={'Save data'}/>
+                    <StyledButton onPress={()=> localStore.saveMultipleData(payload, (result)=> {console.log(result)})} title={'Save Multiple'}/>
                     <StyledButton onPress={()=> localStore.getData('Florinel', (result)=> {console.log(result)})} title={'Get Data'}/>
                     <StyledButton onPress={()=> localStore.getAllKeys()} title={'Get Keys'}/>
                     <StyledButton onPress={()=> localStore.mergeData('Florinel', {hillbilly: true})} title={'Merge'}/>
                     <StyledButton onPress={()=> localStore.clearData()} title={'Clear'}/>
                 </Wrap>
+                <Card title={'Antrenorul Meu Personal'}>
+                    <Button icon={{name: 'code'}}
+                        backgroundColor='#03A9F4'
+                        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                        title='VIEW NOW' />
+                </Card>
             </View>
         );
     }

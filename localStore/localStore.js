@@ -11,9 +11,37 @@ function saveData(key, payload, callback = null)
     });
 }
 
+function saveMultipleData(payload, callback = null)
+{
+    let result = [];
+    for(let i = 0; i < payload.length; i++)
+    {
+        result.push([payload[i].key, JSON.stringify(payload[i].value)]);
+    }
+
+    AsyncStorage.multiSet(result, () => {
+        console.log('saved Multiple')
+        if(callback !== null)
+        {
+            callback(payload);
+        }
+    });
+}
+
 function getData(key, callback = null)
 {
     AsyncStorage.getItem(key, (err, result) => {
+        console.log(result)
+        if(callback !== null)
+        {
+            callback(JSON.parse(result));
+        }
+    });
+}
+
+function getMultiData(keys, callback = null)
+{
+    AsyncStorage.multiGet(keys, (err, result) => {
         console.log(result)
         if(callback !== null)
         {
@@ -53,7 +81,9 @@ function clearData()
 
 export {
     saveData,
+    saveMultipleData,
     getData,
+    getMultiData,
     getAllKeys,
     mergeData,
     clearData

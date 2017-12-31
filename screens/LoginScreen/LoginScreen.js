@@ -9,13 +9,6 @@ import { InputText, StyledButton, Loader, ErrorMessage } from '../../components/
 
 class LoginScreen extends React.Component
 {
-    static navigationOptions = {
-        tabBarLabel: 'Login',
-        tabBarIcon: ({ tintColor }) => (
-            <Icon name="bath" size={30} color="#900" />
-        ),
-    };
-
     state = {
         api: 'https://antrenorulmeupersonal.ro/app-api/getAntrForUser.php',
         username: 'tester.aplicatie@yahoo.com',
@@ -55,13 +48,25 @@ class LoginScreen extends React.Component
         {
             this.toggleLoading();
             axios.get(this.state.api + '?email=' + this.state.username + '&pwd=' + this.state.password).then((response)=> {
-                localStore.saveData('isLogged', {
-                    isLogged: true,
-                    username: this.state.username,
-                    password: this.state.password
+                let payload = [
+                    {
+                        key: 'isLogged',
+                        value: {
+                            isLogged: true,
+                            username: this.state.username,
+                            password: this.state.password
+                        }
+                    },
+                    {
+                        key: 'programs',
+                        value: response
+                    }
+                ];
+
+                localStore.saveMultipleData(payload, ()=> {
+                    this.props.navigation.goBack();
                 });
-                this.props.navigation.goBack();
-                // this.toggleLoading();
+        
             }).catch((err)=> {
                 this.setState({
                     error: true
