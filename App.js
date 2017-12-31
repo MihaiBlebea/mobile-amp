@@ -1,22 +1,26 @@
 import React from 'react';
 
-import { StatusBar, View } from 'react-native';
-import { TabNavigator, DrawerNavigator } from 'react-navigation';
-import { HomeScreen, ProgramScreen, LoginScreen } from './screens/exports.js';
-
-const TabNav = TabNavigator({
-    Home: { screen: HomeScreen },
-    Programs: { screen: ProgramScreen },
-    Login: { screen: LoginScreen }
-}, {
-    tabBarPosition: 'bottom',
-    animationEnabled: true,
-    tabBarOptions: { activeTintColor: '#e91e63' },
-});
+import { StatusBar } from 'react-native';
+import { DrawerNavigator } from 'react-navigation';
+import { ProgramScreen, LoginScreen } from './screens/exports.js';
+import { HomeScreenTabs } from './tabs/exports.js';
+import { Icon } from 'react-native-elements';
 
 const DrawerNav = DrawerNavigator({
-    Home: { screen: HomeScreen },
-    Programs: { screen: ProgramScreen },
+    Home: {
+        screen: HomeScreenTabs,
+        navigationOptions: {
+            drawerLabel: 'Home',
+            drawerIcon: ({ tintColor }) => (<Icon name="attachment" size={25} color="#900" />)
+        }
+    },
+    Programs: {
+        screen: ProgramScreen,
+        navigationOptions: {
+            drawerLabel: 'Programs',
+            drawerIcon: ({ tintColor }) => (<Icon name="attachment" size={25} color="#900" />)
+        }
+    },
     Login: { screen: LoginScreen }
 });
 

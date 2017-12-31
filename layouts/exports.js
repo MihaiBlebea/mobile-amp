@@ -1,4 +1,4 @@
-import Wrap from './Wrap/Wrap';
+import Wrap from './Wrap/Wrap.js';
 
 export {
     Wrap

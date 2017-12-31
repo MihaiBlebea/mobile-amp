@@ -7,7 +7,7 @@ import {
     Image,
     StyleSheet } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
-import { Header } from '../../components/exports.js';
+import { HeaderTwin } from '../../components/exports.js';
 import { Wrap } from '../../layouts/exports.js';
 
 class ProgramScreen extends React.Component
@@ -15,6 +15,10 @@ class ProgramScreen extends React.Component
     static navigationOptions = {
         tabBarLabel: 'Programe',
         tabBarIcon: ({ tintColor }) => (
+            <Icon name="rocket" size={30} color="#900" />
+        ),
+        drawerLabel: 'Programe',
+        drawerIcon: ({ tintColor }) => (
             <Icon name="rocket" size={30} color="#900" />
         ),
     }
@@ -25,7 +29,7 @@ class ProgramScreen extends React.Component
 
         return (
             <View>
-                <Header toggleMenu={this.props.navigation}/>
+                <HeaderTwin toggleMenu={this.props.navigation}/>
                 <Wrap>
                     <Text style={styles.titleText}>
                         Serban

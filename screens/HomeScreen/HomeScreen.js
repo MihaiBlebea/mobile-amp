@@ -4,8 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import * as localStore from '../../localStore/localStore.js';
 import { Text, View, Button, AsyncStorage, NetInfo } from 'react-native';
-import { StackNavigator, TabNavigator } from 'react-navigation';
-import { InputText, Header, StyledButton } from '../../components/exports.js';
+import { InputText, HeaderTwin, StyledButton } from '../../components/exports.js';
 import { Wrap } from '../../layouts/exports.js';
 
 class HomeScreen extends React.Component
@@ -13,6 +12,10 @@ class HomeScreen extends React.Component
     static navigationOptions = {
         tabBarLabel: 'Home',
         tabBarIcon: ({ tintColor }) => (
+            <Icon name="bath" size={20} color="#900" />
+        ),
+        drawerLabel: 'Home',
+        drawerIcon: ({ tintColor }) => (
             <Icon name="bath" size={30} color="#900" />
         ),
     };
@@ -34,29 +37,11 @@ class HomeScreen extends React.Component
         })
     }
 
-    componentDidMount()
-    {
-        NetInfo.isConnected.fetch().then(isConnected => {
-            console.log('First, is ' + (isConnected ? 'online' : 'offline'));
-        });
-
-        NetInfo.isConnected.addEventListener('connectionChange', this.handleConectivityChange);
-    }
-
-    handleConectivityChange()
-    {
-        NetInfo.isConnected.fetch().then(isConnected => {
-            console.log('First, is ' + (isConnected ? 'online' : 'offline'));
-        });
-    }
-
     render()
     {
-        const { navigate } = this.props.navigation;
-
         return (
             <View>
-                <Header toggleMenu={this.props.navigation}/>
+                <HeaderTwin toggleMenu={this.props.navigation}/>
                 <Wrap>
                     <Text>Serban</Text>
                     <Text>This mobile device is {this.state.connected}</Text>
