@@ -58,15 +58,15 @@ class LoginScreen extends React.Component
                         }
                     },
                     {
-                        key: 'programs',
-                        value: response
+                        key: 'AMPrograms',
+                        value: response.data
                     }
                 ];
 
                 localStore.saveMultipleData(payload, ()=> {
                     this.props.navigation.goBack();
                 });
-        
+
             }).catch((err)=> {
                 this.setState({
                     error: true

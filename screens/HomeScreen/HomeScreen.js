@@ -10,6 +10,7 @@ import { Card, Button, Text } from 'react-native-elements';
 
 class HomeScreen extends React.Component
 {
+
     componentWillMount()
     {
         localStore.getData('isLogged', (result)=> {

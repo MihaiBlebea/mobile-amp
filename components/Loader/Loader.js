@@ -1,13 +1,12 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, ActivityIndicator } from 'react-native';
 
 function Loader(props)
 {
     let loader = (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
-                <Image style={styles.image}
-                       source={{ uri: 'https://loading.io/spinners/microsoft/lg.rotating-balls-spinner.gif' }}/>
+                <ActivityIndicator size="large" color="#fff" />
                 <Text style={styles.text}>Loading</Text>
             </View>
         </View>
@@ -24,7 +23,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         backgroundColor: 'rgba(0,0,0,0.8)',
-        zIndex: 100
+        zIndex: 20
     },
     innerContainer: {
         marginTop: '50%',

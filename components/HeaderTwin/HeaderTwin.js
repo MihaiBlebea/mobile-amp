@@ -11,10 +11,10 @@ class HeaderTwin extends React.Component
         let navigation = this.props.toggleMenu;
 
         let menuIcon = (
-            <Icon name='bars'
-                  type='font-awesome'
-                  color='#000'
-                  onPress={() => navigation.navigate('DrawerToggle')} />
+            <Icon name="menu"
+                type="entypo"
+                color='#000'
+                onPress={() => navigation.navigate('DrawerOpen')}/>
         );
 
         let homeIcon = (
@@ -25,13 +25,12 @@ class HeaderTwin extends React.Component
         )
 
         return (
-            <Header
-                statusBarProps={{ barStyle: 'light-content' }}
-                leftComponent={ menuIcon }
-                centerComponent={{ text: title.toUpperCase(), style: { color: '#000' } }}
-                rightComponent={ homeIcon }
-                outerContainerStyles={{ backgroundColor: '#61DAFB' }}
-                innerContainerStyles={{ justifyContent: 'space-between', alignItems: 'flex-end'}}/>
+            <Header statusBarProps={{ barStyle: 'dark-content' }}
+                    leftComponent={ menuIcon }
+                    centerComponent={{ text: title.toUpperCase(), style: { color: '#000' } }}
+                    rightComponent={ homeIcon }
+                    outerContainerStyles={{ backgroundColor: 'transparent' }}
+                    innerContainerStyles={{ justifyContent: 'space-between', alignItems: 'flex-end'}}/>
         );
     }
 }

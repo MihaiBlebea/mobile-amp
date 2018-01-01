@@ -1,100 +1,105 @@
 import React from 'react';
 
 import { View,
-         Image,
-         StyleSheet } from 'react-native';
-import { HeaderTwin, ErrorMessage, Loader } from '../../components/exports.js';
+         ScrollView } from 'react-native';
+import { TitleCard } from '../../components/exports.js';
 import { Wrap } from '../../layouts/exports.js';
-import { Card, Button, Text } from 'react-native-elements'
+import { Card, Button, Text, Icon, List, ListItem } from 'react-native-elements'
 import * as localStore from '../../localStore/localStore.js';
 
 class ProgramScreen extends React.Component
 {
     state = {
-        programs: null,
-        error: false,
-        loading: false
+        programId : null,
+        program: null
     }
 
     componentDidMount()
     {
-        localStore.getData('programs', (result)=> {
+        this.setState({
+            programId: this.props.navigation.state.params.programId
+        });
+
+        localStore.getData('AMPrograms', (result)=> {
             if(result !== null)
             {
-                this.setState({
-                    programs: result
-                })
-            } else {
-                this.setState({
-                    error: true
-                })
+                for(let i = 0; i < Object.keys(result).length; i++)
+                {
+                    if(result[i].id == this.state.programId)
+                    {
+                        this.setState({
+                            program: result[i]
+                        })
+                    }
+                }
             }
         })
     }
 
-    toggleLoading()
+    navigateToDay(id)
     {
-        let loading = this.state.loading;
-        this.setState({
-            loading: !loading
-        });
+        for(let i = 0; i < Object.values(this.state.program.zile).length; i++)
+        {
+            if(Object.values(this.state.program.zile)[i].id == id)
+            {
+                this.props.navigation.navigate('Day', {
+                    dayID: id,
+                    programID: this.state.program.id,
+                    screenTitle: Object.values(this.state.program.zile)[i].titlu
+                });
+            }
+        }
+    }
+
+    constructProgramCard()
+    {
+        if(this.state.program !== null)
+        {
+            return (
+                <Card title='Detalii Program'>
+                    <Text style={{marginBottom: 10}}>
+                        { this.state.program.detalii }
+                    </Text>
+                </Card>
+            );
+        } else {
+            return null;
+        }
+    }
+
+    constructProgramList()
+    {
+        if(this.state.program !== null)
+        {
+            return  Object.values(this.state.program.zile).map((item, i) => {
+                return (
+                    <ListItem key={i}
+                        title={item.titlu}
+                        leftIcon={{ name: 'whatshot' }}
+                        onPress={()=> this.navigateToDay(item.id)} />
+                )
+            });
+        } else {
+            return null;
+        }
     }
 
     render()
     {
-
-        // if(this.state.programs !== null)
-        // {
-        //     let programs = this.state.programs;
-        //     programs.map((item)=> {
-        //         console.log(item)
-        //     })
-        // }
-
-        // if(this.state.programs !== null)
-        // {
-        //     let programs = this.state.programs.map((index, item)=> {
-        //         return (
-        //             <Card title={item.titlu}
-        //                   image={require('../../assets/img/coperta.png')}>
-        //                 <Text style={{marginBottom: 10}}>
-        //                     The idea with React Native Elements is more about component structure than actual design.
-        //                 </Text>
-        //                 <Button backgroundColor='#03A9F4'
-        //                         buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-        //                         title='VIEW NOW' />
-        //             </Card>
-        //         );
-        //     });
-        // }
-
         return (
             <View>
-                <HeaderTwin toggleMenu={this.props.navigation}/>
-                <Loader isLoading={this.state.loading}/>
-                <Wrap>
-                    <ErrorMessage isShowing={this.state.error}
-                                  type={'error'}>Se pare ca nu ai niciun program activ</ErrorMessage>
-                    <Text style={styles.titleText}>
-                        Serban
-                    </Text>
-                </Wrap>
+                <ScrollView>
+                    <TitleCard textColor={'white'} bgColor={'red'} icon='whatshot' />
+                    { this.constructProgramCard() }
+                    <Wrap>
+                        <List>
+                            { this.constructProgramList() }
+                        </List>
+                    </Wrap>
+                </ScrollView>
             </View>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    image: {
-        width: 150,
-        height: 150
-    },
-    titleText: {
-        color: 'red',
-        fontFamily: 'Cochin',
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-});
 
 export default ProgramScreen;

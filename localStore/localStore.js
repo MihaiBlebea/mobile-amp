@@ -31,7 +31,7 @@ function saveMultipleData(payload, callback = null)
 function getData(key, callback = null)
 {
     AsyncStorage.getItem(key, (err, result) => {
-        console.log(result)
+        console.log(`Item with key ${key} retrived`)
         if(callback !== null)
         {
             callback(JSON.parse(result));
@@ -42,7 +42,6 @@ function getData(key, callback = null)
 function getMultiData(keys, callback = null)
 {
     AsyncStorage.multiGet(keys, (err, result) => {
-        console.log(result)
         if(callback !== null)
         {
             callback(JSON.parse(result));

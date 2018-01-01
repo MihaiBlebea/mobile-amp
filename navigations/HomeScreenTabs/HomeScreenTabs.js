@@ -11,23 +11,10 @@ const HomeScreenTabs = TabNavigator({
             tabBarLabel: 'Bar',
             tabBarIcon: ({ tintColor }) => (<Icon name="adjust" size={30} color="#900" />)
         }
-    },
-    Foo: {
-        screen: HomeScreen,
-        navigationOptions: {
-            tabBarLabel: 'Foo',
-            tabBarIcon: ({ tintColor }) => (<Icon name="adjust" size={30} color="#900" />)
-        }
-    },
-    FooBar: {
-        screen: HomeScreen,
-        navigationOptions: {
-            tabBarLabel: 'FooBar',
-            tabBarIcon: ({ tintColor }) => (<Icon name="adjust" size={30} color="#900" />)
-        }
     }
 }, {
     initialRouteName: 'Bar',
+    swipeEnabled: true,
     tabBarPosition: 'bottom',
     animationEnabled: true,
     tabBarOptions: { activeTintColor: '#e91e63' },
