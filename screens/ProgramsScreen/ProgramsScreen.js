@@ -66,6 +66,8 @@ class ProgramsScreen extends React.Component
                     </Card>
                 );
             });
+        } else {
+            return ( <Loader isLoading={true}/> );
         }
     }
 

@@ -4,6 +4,7 @@ import StyledButton from './StyledButton/StyledButton.js';
 import Loader from './Loader/Loader.js';
 import ErrorMessage from './ErrorMessage/ErrorMessage.js';
 import TitleCard from './TitleCard/TitleCard.js';
+import RoundButton from './RoundButton/RoundButton.js';
 
 export {
     InputText,
@@ -11,5 +12,6 @@ export {
     Loader,
     ErrorMessage,
     HeaderTwin,
-    TitleCard
+    TitleCard,
+    RoundButton
 }

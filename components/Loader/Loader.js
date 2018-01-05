@@ -6,7 +6,7 @@ function Loader(props)
     let loader = (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
-                <ActivityIndicator size="large" color="#fff" />
+                <ActivityIndicator size="large" color="#000" />
                 <Text style={styles.text}>Loading</Text>
             </View>
         </View>
@@ -17,12 +17,12 @@ function Loader(props)
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
+        position: 'relative',
         top: 0,
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: 'rgba(0,0,0,0.8)',
+        // backgroundColor: 'rgba(0,0,0,0.8)',
         zIndex: 20
     },
     innerContainer: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 25,
-        color: '#fff',
+        color: '#000',
         textAlign: 'center'
     }
 });

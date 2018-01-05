@@ -13,6 +13,7 @@ class HeaderTwin extends React.Component
         let menuIcon = (
             <Icon name="menu"
                 type="entypo"
+                size={26}
                 color='#000'
                 onPress={() => navigation.navigate('DrawerOpen')}/>
         );
