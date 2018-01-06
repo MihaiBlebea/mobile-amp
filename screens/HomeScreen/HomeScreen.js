@@ -3,9 +3,9 @@ import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import * as localStore from '../../localStore/localStore.js';
-import { View, AsyncStorage, NetInfo, ScrollView } from 'react-native';
+import { View, AsyncStorage, ScrollView } from 'react-native';
 import { InputText, HeaderTwin, StyledButton, TitleCard } from '../../components/exports.js';
-import { Wrap } from '../../layouts/exports.js';
+import { Wrap } from '../../containers/exports.js';
 import { Card, Button, Text } from 'react-native-elements';
 
 class HomeScreen extends React.Component
@@ -31,14 +31,13 @@ class HomeScreen extends React.Component
 
         return (
             <View>
-                <HeaderTwin toggleMenu={this.props.navigation}/>
                 <ScrollView>
                     <TitleCard textColor={'white'} bgColor={'red'} icon='whatshot' />
                     <Wrap>
                         <Text>Serban</Text>
                         <StyledButton onPress={()=> localStore.saveData('Florinel', {name: 'Florinel', job: 'Screw seller'}) } title={'Save data'}/>
                         <StyledButton onPress={()=> localStore.saveMultipleData(payload, (result)=> {console.log(result)})} title={'Save Multiple'}/>
-                        <StyledButton onPress={()=> localStore.getData('log', (result)=> {console.log(result)})} title={'Get Data'}/>
+                        <StyledButton onPress={()=> localStore.getData('isLogged', (result)=> {console.log(result)})} title={'Get Data'}/>
                         <StyledButton onPress={()=> localStore.getAllKeys()} title={'Get Keys'}/>
                         <StyledButton onPress={()=> localStore.mergeData('Florinel', {hillbilly: true})} title={'Merge'}/>
                         <StyledButton onPress={()=> localStore.clearData()} title={'Clear'}/>

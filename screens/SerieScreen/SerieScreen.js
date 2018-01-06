@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { View, ScrollView, StyleSheet } from 'react-native';
-import { Wrap } from '../../layouts/exports.js';
+import { Wrap } from '../../containers/exports.js';
 import { RoundButton } from '../../components/exports.js';
 import { Card, Text, Divider, Button} from 'react-native-elements'
 import * as localStore from '../../localStore/localStore.js';

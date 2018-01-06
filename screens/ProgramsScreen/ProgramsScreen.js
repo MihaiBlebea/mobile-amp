@@ -5,7 +5,7 @@ import { View,
          Image,
          StyleSheet } from 'react-native';
 import { HeaderTwin, ErrorMessage, Loader, TitleCard } from '../../components/exports.js';
-import { Wrap } from '../../layouts/exports.js';
+import { Wrap } from '../../containers/exports.js';
 import { Card, Button, Text, Icon } from 'react-native-elements'
 import * as localStore from '../../localStore/localStore.js';
 

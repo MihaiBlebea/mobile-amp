@@ -1,7 +1,7 @@
-import HomeScreenTabs from './HomeScreenTabs/HomeScreenTabs.js';
-import ProgramScreenStacked from './ProgramScreenStacked/ProgramScreenStacked.js';
+import ProgramNavigation from './ProgramNavigation/ProgramNavigation.js';
+import MainNavigation from './MainNavigation/MainNavigation.js';
 
 export {
-    HomeScreenTabs,
-    ProgramScreenStacked
+    ProgramNavigation,
+    MainNavigation
 }

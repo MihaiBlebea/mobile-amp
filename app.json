@@ -1,5 +1,7 @@
 {
     "expo": {
+        "name": "Antrenorul Meu Personal Mobile",
+        "icon": "./assets/img/logo.png",
         "sdkVersion": "22.0.0",
         "orientation" : "portrait",
     }

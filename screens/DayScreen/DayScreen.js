@@ -2,8 +2,8 @@ import React from 'react';
 
 import { View,
          ScrollView } from 'react-native';
-import { TitleCard } from '../../components/exports.js';
-import { Wrap, MarginLayout, Loader } from '../../layouts/exports.js';
+import { TitleCard, Loader } from '../../components/exports.js';
+import { Wrap } from '../../containers/exports.js';
 import { Card, Button, Text, Icon, List, ListItem } from 'react-native-elements'
 import * as localStore from '../../localStore/localStore.js';
 
@@ -127,13 +127,11 @@ class DayScreen extends React.Component
             <View>
                 <ScrollView>
                     <TitleCard textColor={'white'} bgColor={'green'} icon='whatshot' />
-                    { this.constructDayCard() }
-                    <MarginLayout>
-                        <Button backgroundColor='#03A9F4'
-                            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                            title='Salveaza Antrenamentul'
-                            onPress={()=> this.handleSaveDay()}/>
-                    </MarginLayout>
+                    { this.constructDayCard() }    
+                    <Button backgroundColor='#03A9F4'
+                        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                        title='Salveaza Antrenamentul'
+                        onPress={()=> this.handleSaveDay()}/>
                 </ScrollView>
             </View>
         );

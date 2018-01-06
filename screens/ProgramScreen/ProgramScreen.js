@@ -3,7 +3,7 @@ import React from 'react';
 import { View,
          ScrollView } from 'react-native';
 import { TitleCard, Loader } from '../../components/exports.js';
-import { Wrap } from '../../layouts/exports.js';
+import { Wrap } from '../../containers/exports.js';
 import { Card, Button, Text, Icon, List, ListItem } from 'react-native-elements'
 import * as localStore from '../../localStore/localStore.js';
 
