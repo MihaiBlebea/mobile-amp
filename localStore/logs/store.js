@@ -17,6 +17,7 @@ const checkIfDuplicate = (programID, dayID, success, fail = null)=> {
                     exists = true;
                 }
             }
+
             if(exists == true)
             {
                 if(fail !== null)
@@ -67,7 +68,7 @@ export const saveLog = (log, callback = null)=> {
 }
 
 // Day functions
-export const initLogDay = (programID, dayID, today = null, callback = null)=> {
+export const initLogDay = (programID, dayID, today = null)=> {
     checkIfDuplicate(programID, dayID, (logs)=> {
         if(logs !== null)
         {
