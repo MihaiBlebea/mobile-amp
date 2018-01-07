@@ -22,6 +22,11 @@ class HomeScreen extends React.Component
         })
     }
 
+    handleCreateLog()
+    {
+        store.setLogSerie(1, 100, 100, {r: 20, g: 100}, (log)=> {console.log(log)});
+    }
+
     render()
     {
         let payload = [
@@ -36,12 +41,13 @@ class HomeScreen extends React.Component
                     <TitleCard textColor={'white'} bgColor={'red'} icon='whatshot' />
                     <Wrap>
                         <Text>Serban</Text>
-                        <StyledButton onPress={()=> localStore.saveData('Florinel', {name: 'Florinel', job: 'Screw seller'}) } title={'Save data'}/>
-                        <StyledButton onPress={()=> localStore.saveMultipleData(payload, (result)=> {console.log(result)})} title={'Save Multiple'}/>
-                        <StyledButton onPress={()=> store.getProgram(0)} title={'Get Data'}/>
-                        <StyledButton onPress={()=> localStore.getAllKeys()} title={'Get Keys'}/>
-                        <StyledButton onPress={()=> localStore.mergeData('Florinel', {hillbilly: true})} title={'Merge'}/>
-                        <StyledButton onPress={()=> localStore.clearData()} title={'Clear'}/>
+                        <StyledButton onPress={()=> store.getProgram(1, (result)=> {console.log(result)})} title={'Get Data'}/>
+                        <StyledButton onPress={()=> store.getDay(1, 100, (result)=> {console.log(result)})} title={'Get Day'}/>
+                        <StyledButton onPress={()=> store.getExercise(1, 100, 100, (result)=> {console.log(result)})} title={'Get Exercise'}/>
+                        <StyledButton onPress={()=> store.initLogDay(1, 100, null, (result)=> {console.log(result)})} title={'Set log'}/>
+                        <StyledButton onPress={()=> store.getLogs((result)=> {console.log(result)})} title={'Get logs'}/>
+                        <StyledButton onPress={()=> store.resetLogs((result)=> {console.log(result)})} title={'Reset Logs'}/>
+                        <StyledButton onPress={()=> this.handleCreateLog()} title={'Save Serie Logs'}/>
                     </Wrap>
                     <Card title={'Antrenorul Meu Personal'}>
                         <Button icon={{name: 'code'}}
