@@ -2,7 +2,7 @@ import * as store from  '../localStore.js';
 import { getDay } from '../exports.js';
 import * as date from '../exports.js';
 
-const LOGS = 'AMLogs';
+const LOGS = 'AmpLogs';
 
 
 const checkIfDuplicate = (programID, dayID, success, fail = null)=> {
@@ -27,6 +27,8 @@ const checkIfDuplicate = (programID, dayID, success, fail = null)=> {
             } else {
                 success(logs);
             }
+        } else {
+            return success(logs);
         }
     })
 }
@@ -34,19 +36,23 @@ const checkIfDuplicate = (programID, dayID, success, fail = null)=> {
 // Misc functions
 export const resetLogs = (callback = null)=> {
     store.saveData(LOGS, [], (result)=> {
-        callback(result);
+        if(callback !== null)
+        {
+            callback(result);
+        }
     });
 }
 
 // Logs functions
 export const getLogs = (callback)=> {
-    store.getData(LOGS, (logs)=> {
-        callback(logs);
-    })
+    store.getData(LOGS, (result)=> {
+        callback(result)
+    });
 }
 
 export const saveLogs = (logs, callback = null)=> {
     store.saveData(LOGS, logs, (result)=> {
+        console.log(logs)
         if(callback !== null)
         {
             callback(result);
@@ -90,6 +96,7 @@ export const initLogDay = (programID, dayID, today = null)=> {
                     date: (today == null) ? date.today() : today,
                     exercises: exercises
                 }
+                console.log(logs);
                 logs.push(payload);
                 saveLogs(logs);
             })
@@ -110,6 +117,8 @@ export const getLogDay = (programID, dayID, callback)=> {
                     callback(logs[i]);
                 }
             }
+        } else {
+            callback([]);
         }
     })
 }

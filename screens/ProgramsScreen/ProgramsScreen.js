@@ -1,5 +1,6 @@
 import React from 'react';
 
+import * as store from '../../localStore/exports.js';
 import { View,
          ScrollView,
          Image,
@@ -7,26 +8,35 @@ import { View,
 import { HeaderTwin, ErrorMessage, Loader, TitleCard } from '../../components/exports.js';
 import { Wrap } from '../../containers/exports.js';
 import { Card, Button, Text, Icon } from 'react-native-elements'
-import * as localStore from '../../localStore/localStore.js';
+
 
 class ProgramsScreen extends React.Component
 {
     state = {
-        programs: null,
-        error: false
+        programs: null
     }
 
     componentDidMount()
     {
-        localStore.getData('AMPrograms', (result)=> {
-            if(result !== null)
-            {
-                this.setState({
-                    programs: result
-                })
+        // this.handleCheckLogin();
+        this.handleGetPrograms();
+    }
+
+    handleCheckLogin()
+    {
+        store.isLogin((user)=> {
+            if(user == null) { this.props.navigation.navigate('Login'); }
+        })
+    }
+
+    handleGetPrograms()
+    {
+        store.getPrograms((programs)=> {
+            if(programs == null) {
+                this.props.navigation.navigate('Login');
             } else {
                 this.setState({
-                    error: true
+                    programs: programs
                 })
             }
         })
@@ -57,7 +67,7 @@ class ProgramsScreen extends React.Component
                     <Card key={key} title={item.titlu}
                           image={require('../../assets/img/coperta.png')}>
                         <Text style={{marginBottom: 10}}>
-                            {item.detalii}
+                            Detalii
                         </Text>
                         <Button backgroundColor='#03A9F4'
                                 buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
@@ -73,14 +83,22 @@ class ProgramsScreen extends React.Component
 
     render()
     {
+        let noProgramCard = (
+            <Card title={'Login'}>
+                <Text style={{marginBottom: 10}}>
+                    Din pacate nu ai niciun program valabil.
+                </Text>
+                <Button backgroundColor='#03A9F4'
+                        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                        title='Login in cont'
+                        onPress={()=> this.props.navigation.navigate('Login')} />
+            </Card>
+        )
+
         return (
             <ScrollView>
                 <TitleCard textColor={'white'} bgColor={'blue'} icon='whatshot' />
-                <Wrap>
-                    <ErrorMessage isShowing={this.state.error}
-                                     type={'error'}>Se pare ca nu ai niciun program activ</ErrorMessage>
-                </Wrap>
-                { this.getProgramCard() }
+                { (this.state.programs == null) ? noProgramCard : this.getProgramCard() }
             </ScrollView>
         );
     }

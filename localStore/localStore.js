@@ -28,15 +28,14 @@ function saveMultipleData(payload, callback = null)
     });
 }
 
-function getData(key, callback = null)
+function getData(key, callback)
 {
-    AsyncStorage.getItem(key, (err, result) => {
+    AsyncStorage.getItem(key).then((result)=> {
         console.log(`Item with key ${key} retrived`)
-        if(callback !== null)
-        {
-            callback(JSON.parse(result));
-        }
-    });
+        callback(JSON.parse(result));
+    }).catch((err)=> {
+        console.log(err)
+    })
 }
 
 function getMultiData(keys, callback = null)
@@ -78,6 +77,15 @@ function clearData()
     })
 }
 
+function removeData(key, callback)
+{
+    AsyncStorage.removeItem(key).then((result)=> {
+        callback(result)
+    }).catch((err)=> {
+        console.log(err)
+    })
+}
+
 export {
     saveData,
     saveMultipleData,
@@ -85,5 +93,6 @@ export {
     getMultiData,
     getAllKeys,
     mergeData,
-    clearData
+    clearData,
+    removeData
 }

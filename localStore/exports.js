@@ -1,4 +1,4 @@
-export { getProgram, getDay, getExercise } from './programs/store.js';
+export { getPrograms, getProgram, getDay, getExercise } from './programs/store.js';
 export { resetLogs,
          getLogs,
          initLogDay,
@@ -6,4 +6,5 @@ export { resetLogs,
          setLogSerie,
          saveLogs,
          saveLog } from './logs/store.js';
+export { isLogin, logIn, logOut } from './user/store.js';
 export { today } from './date.js';

@@ -1,6 +1,11 @@
 import * as store from  '../localStore.js';
 
+
 const PROGRAMS = 'AMPrograms';
+
+export const getPrograms = (callback)=> {
+    store.getData(PROGRAMS, callback);
+}
 
 export const getProgram = (programID, callback)=> {
     store.getData(PROGRAMS, (result)=> {

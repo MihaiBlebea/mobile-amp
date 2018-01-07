@@ -5,50 +5,33 @@ import { View,
 import { TitleCard, Loader } from '../../components/exports.js';
 import { Wrap } from '../../containers/exports.js';
 import { Card, Button, Text, Icon, List, ListItem } from 'react-native-elements'
-import * as localStore from '../../localStore/localStore.js';
+import * as store from '../../localStore/exports.js';
 
 class ProgramScreen extends React.Component
 {
     state = {
-        programId : null,
         program: null
     }
 
     componentDidMount()
     {
-        this.setState({
-            programId: this.props.navigation.state.params.programId
-        });
+        this.handleGetProgram();
+    }
 
-        localStore.getData('AMPrograms', (result)=> {
-            if(result !== null)
-            {
-                for(let i = 0; i < Object.keys(result).length; i++)
-                {
-                    if(result[i].id == this.state.programId)
-                    {
-                        this.setState({
-                            program: result[i]
-                        })
-                    }
-                }
-            }
+    handleGetProgram()
+    {
+        store.getProgram(this.props.navigation.state.params.programId, (program)=> {
+            this.setState({ program: program })
         })
     }
 
     navigateToDay(id)
     {
-        for(let i = 0; i < Object.values(this.state.program.zile).length; i++)
-        {
-            if(Object.values(this.state.program.zile)[i].id == id)
-            {
-                this.props.navigation.navigate('Day', {
-                    dayID: id,
-                    programID: this.state.program.id,
-                    screenTitle: Object.values(this.state.program.zile)[i].titlu
-                });
-            }
-        }
+        this.props.navigation.navigate('Day', {
+            dayID: id,
+            programID: this.state.program.id,
+            screenTitle: this.state.program.titlu
+        });
     }
 
     constructProgramCard()

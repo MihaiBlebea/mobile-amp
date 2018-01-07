@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import * as localStore from '../../localStore/localStore.js';
+import * as store from '../../localStore/exports.js';
 import { View, Text, StyleSheet } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { InputText, StyledButton, Loader, ErrorMessage } from '../../components/exports.js';
@@ -50,7 +50,7 @@ class LoginScreen extends React.Component
             axios.get(this.state.api + '?email=' + this.state.username + '&pwd=' + this.state.password).then((response)=> {
                 let payload = [
                     {
-                        key: 'isLogged',
+                        key: 'AmpUser',
                         value: {
                             isLogged: true,
                             username: this.state.username,
@@ -63,7 +63,7 @@ class LoginScreen extends React.Component
                     }
                 ];
 
-                localStore.saveMultipleData(payload, ()=> {
+                store.logIn(payload, ()=> {
                     this.props.navigation.goBack();
                 });
 
