@@ -4,7 +4,7 @@ import { View,
          ScrollView } from 'react-native';
 import { TitleCard, Loader } from '../../components/exports.js';
 import { Wrap } from '../../containers/exports.js';
-import { Card, Button, Text, Icon, List, ListItem } from 'react-native-elements'
+import { Card, Button, Text, Icon, List, ListItem, Divider } from 'react-native-elements';
 import * as store from '../../localStore/exports.js';
 
 class DayScreen extends React.Component
@@ -66,7 +66,7 @@ class DayScreen extends React.Component
 
     constructDayCard()
     {
-        if(this.state.day !== null)
+        if(this.state.day !== null && this.state.log !== null)
         {
             return Object.values(this.state.day.exercitii).map((item, key)=> {
                 return (
@@ -74,7 +74,8 @@ class DayScreen extends React.Component
                         <Text style={{marginBottom: 10}}>
                             {item.serii} serii a cate {item.repetari} repetari cu {item.pauza} secunde pauza
                         </Text>
-                        { this.constructSerieList() }
+                        { this.constructSerieList(item.id_ex) }
+                        <Divider />
                         <Button backgroundColor='green'
                             buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
                             title='Adauga Serie'
@@ -87,9 +88,19 @@ class DayScreen extends React.Component
         }
     }
 
-    constructSerieList()
+    constructSerieList(exerciseID)
     {
-        
+        for(let i = 0; i < this.state.log.exercises.length; i++)
+        {
+            let exercise = this.state.log.exercises[i];
+            if(exercise.id == exerciseID)
+            {
+                return exercise.series.map((serie, index)=> {
+                    return <Text key={index}>{serie.r} - {serie.g} kg</Text>
+                });
+                break;
+            }
+        }
     }
 
 
