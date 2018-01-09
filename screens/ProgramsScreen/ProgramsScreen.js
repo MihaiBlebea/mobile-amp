@@ -1,16 +1,29 @@
 import React from 'react';
 
 import * as store from '../../localStore/exports.js';
-import { View,
-         ScrollView,
-         Image,
-         StyleSheet } from 'react-native';
-import { HeaderTwin, ErrorMessage, Loader, TitleCard } from '../../components/exports.js';
+import { StyleSheet, Image, View } from 'react-native';
 import { Wrap } from '../../containers/exports.js';
-import { Card, Button, Text, Icon } from 'react-native-elements'
+import { TitleCard } from '../../components/exports.js';
+import { Container,
+        Header,
+        Title,
+        Content,
+        Card,
+        CardItem,
+        Thumbnail,
+        Footer,
+        Button,
+        FooterTab,
+        Left,
+        Right,
+        Body,
+        Icon,
+        Text,
+        Toast,
+        Spinner} from 'native-base';
 
 
-class ProgramsScreen extends React.Component
+class NativeProgramsScreen extends React.Component
 {
     state = {
         programs: null
@@ -64,57 +77,71 @@ class ProgramsScreen extends React.Component
         {
             return Object.values(this.state.programs).map((item, key)=> {
                 return (
-                    <Card key={key} title={item.titlu}
-                          image={require('../../assets/img/coperta.png')}>
-                        <Text style={{marginBottom: 10}}>
-                            Detalii
-                        </Text>
-                        <Button backgroundColor='#03A9F4'
-                                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                                title='VIEW NOW'
-                                onPress={()=> this.navigateToProgram(item.id)} />
+                    <Card key={key} style={{flex: 0}}>
+                        <CardItem>
+                            <Left>
+                                <Thumbnail square source={require('../../assets/img/logo.png')} />
+                                <Body>
+                                    <Text>NativeBase</Text>
+                                    <Text note>April 15, 2016</Text>
+                                </Body>
+                            </Left>
+                        </CardItem>
+                        <CardItem>
+                            <Body>
+                                <Image source={require('../../assets/img/coperta.png')}
+                                       style={{ flex:1, height: 200, width: 200}}
+                                       resizeMode="contain"/>
+                                <Text>
+                                    //Your text here
+                                </Text>
+                                <Button block onPress={()=> this.navigateToProgram(item.id)}>
+                                    <Text>Primary</Text>
+                                </Button>
+                            </Body>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Button transparent textStyle={{color: '#87838B'}}>
+                                    <Icon name="logo-github" />
+                                    <Text>1,926 stars</Text>
+                                </Button>
+                            </Left>
+                        </CardItem>
                     </Card>
                 );
             });
         } else {
-            return ( <Loader isLoading={true}/> );
+            return ( <Spinner color='green' /> );
         }
     }
 
     render()
     {
         let noProgramCard = (
-            <Card title={'Login'}>
-                <Text style={{marginBottom: 10}}>
-                    Din pacate nu ai niciun program valabil.
-                </Text>
-                <Button backgroundColor='#03A9F4'
-                        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                        title='Login in cont'
-                        onPress={()=> this.props.navigation.navigate('Login')} />
+            <Card>
+                <CardItem>
+                    <Body>
+                        <Text>
+                            Se pare ca nu ai niciun program in cont sau nu esti logat
+                        </Text>
+                    </Body>
+                </CardItem>
             </Card>
         )
 
         return (
-            <ScrollView>
-                <TitleCard textColor={'white'} bgColor={'blue'} icon='whatshot' />
-                { (this.state.programs == null) ? noProgramCard : this.getProgramCard() }
-            </ScrollView>
+            <Container>
+                <Content>
+                    <TitleCard textColor={'white'} bgColor={'blue'} icon='whatshot' />
+                    <Wrap>
+                        { (this.state.programs == null) ? noProgramCard : this.getProgramCard() }
+                    </Wrap>
+                </Content>
+            </Container>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    image: {
-        width: 150,
-        height: 150
-    },
-    titleText: {
-        color: 'red',
-        fontFamily: 'Cochin',
-        fontSize: 20,
-        fontWeight: 'bold',
-    }
-});
 
-export default ProgramsScreen;
+export default NativeProgramsScreen;

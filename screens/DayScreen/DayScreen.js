@@ -1,11 +1,30 @@
 import React from 'react';
 
+import * as store from '../../localStore/exports.js';
 import { View,
          ScrollView } from 'react-native';
-import { TitleCard, Loader } from '../../components/exports.js';
+import { TitleCard } from '../../components/exports.js';
 import { Wrap } from '../../containers/exports.js';
-import { Card, Button, Text, Icon, List, ListItem, Divider } from 'react-native-elements';
-import * as store from '../../localStore/exports.js';
+import { Container,
+        Header,
+        Title,
+        Content,
+        Card,
+        CardItem,
+        Thumbnail,
+        Footer,
+        Button,
+        FooterTab,
+        Left,
+        Right,
+        Body,
+        Icon,
+        Text,
+        Toast,
+        Spinner,
+        List,
+        ListItem} from 'native-base';
+
 
 class DayScreen extends React.Component
 {
@@ -70,21 +89,41 @@ class DayScreen extends React.Component
         {
             return Object.values(this.state.day.exercitii).map((item, key)=> {
                 return (
-                    <Card key={key} title={item.nume + ' ' + item.varianta}>
-                        <Text style={{marginBottom: 10}}>
-                            {item.serii} serii a cate {item.repetari} repetari cu {item.pauza} secunde pauza
-                        </Text>
-                        { this.constructSerieList(item.id_ex) }
-                        <Divider />
-                        <Button backgroundColor='green'
-                            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                            title='Adauga Serie'
-                            onPress={()=> this.navigateToSerie(item.id_ex)}/>
+                    <Card key={key} style={{flex: 0}}>
+                        <CardItem>
+                            <Left>
+                                <Thumbnail square source={require('../../assets/img/logo.png')} />
+                                <Body>
+                                    <Text>{item.nume + ' ' + item.varianta}</Text>
+                                </Body>
+                            </Left>
+                        </CardItem>
+                        <CardItem>
+                            <Body>
+                                <Text style={{marginBottom: 10}}>
+                                    {item.serii} serii a cate {item.repetari} repetari cu {item.pauza} secunde pauza
+                                </Text>
+                                <List>
+                                    { this.constructSerieList(item.id_ex) }
+                                </List>
+                                <Button block onPress={()=> this.navigateToSerie(item.id_ex)}>
+                                    <Text>Primary</Text>
+                                </Button>
+                            </Body>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Button transparent textStyle={{color: '#87838B'}}>
+                                    <Icon name="logo-github" />
+                                    <Text>1,926 stars</Text>
+                                </Button>
+                            </Left>
+                        </CardItem>
                     </Card>
                 );
             });
         } else {
-            return ( <Loader isLoading={true}/> );
+            return ( <Spinner /> );
         }
     }
 
@@ -95,28 +134,40 @@ class DayScreen extends React.Component
             let exercise = this.state.log.exercises[i];
             if(exercise.id == exerciseID)
             {
-                return exercise.series.map((serie, index)=> {
-                    return <Text key={index}>{serie.r} - {serie.g} kg</Text>
+
+                return exercise.series.map((serie, key)=> {
+                    return (
+                        <ListItem icon key={key}>
+                            <Left>
+                                <Icon name="arrow-forward" />
+                            </Left>
+                            <Body>
+                                <Text>reps</Text>
+                            </Body>
+                            <Right>
+                                <Text>{serie.r} reps cu {serie.g} kg</Text>
+                            </Right>
+                        </ListItem>
+                    )
                 });
-                break;
             }
         }
     }
 
-
     render()
     {
         return (
-            <View>
-                <ScrollView>
+            <Container>
+                <Content>
                     <TitleCard textColor={'white'} bgColor={'green'} icon='whatshot' />
-                    { this.constructDayCard() }
-                    <Button backgroundColor='#03A9F4'
-                        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                        title='Salveaza Antrenamentul'
-                        onPress={()=> this.handleSaveDay()}/>
-                </ScrollView>
-            </View>
+                    <Wrap>
+                        { this.constructDayCard() }
+                        <Button block onPress={()=> this.handleSaveDay()}>
+                            <Text>Salveaza</Text>
+                        </Button>
+                    </Wrap>
+                </Content>
+            </Container>
         );
     }
 }

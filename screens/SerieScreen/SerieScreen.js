@@ -1,10 +1,28 @@
 import React from 'react';
 
-import { View, ScrollView, StyleSheet } from 'react-native';
-import { Wrap } from '../../containers/exports.js';
-import { RoundButton } from '../../components/exports.js';
-import { Card, Text, Divider, Button} from 'react-native-elements'
 import * as localStore from '../../localStore/localStore.js';
+import { Wrap } from '../../containers/exports.js';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { Container,
+        Header,
+        Title,
+        Content,
+        Card,
+        CardItem,
+        Thumbnail,
+        Footer,
+        Button,
+        FooterTab,
+        Left,
+        Right,
+        Body,
+        Icon,
+        Text,
+        Toast,
+        Spinner,
+        List,
+        ListItem} from 'native-base';
+
 
 class SerieScreen extends React.Component
 {
@@ -69,55 +87,18 @@ class SerieScreen extends React.Component
     render()
     {
         return (
-            <View>
-                <View style={styles.firstContainer}>
-                    <View style={styles.oneThird}>
-                        <RoundButton color="green" title="-10kg" fontSize={20} onPress={()=> this.handleWeightChange(-10)}/>
-                        <RoundButton color="green" title="-5kg" fontSize={18} onPress={()=> this.handleWeightChange(-5)}/>
-                        <RoundButton color="green" title="-2.5kg" fontSize={20} onPress={()=> this.handleWeightChange(-2.5)}/>
-                    </View>
-                    <View style={styles.oneThird}>
-                        <Text h1 style={{textAlign: 'center'}}>{this.state.weight}kg</Text>
-                    </View>
-                    <View style={styles.oneThird}>
-                        <RoundButton color="green" title="+10kg" fontSize={20} onPress={()=> this.handleWeightChange(10)}/>
-                        <RoundButton color="green" title="+5kg" fontSize={18} onPress={()=> this.handleWeightChange(5)}/>
-                        <RoundButton color="green" title="+2.5kg" fontSize={20} onPress={()=> this.handleWeightChange(2.5)}/>
-                    </View>
-                </View>
+            <Container>
+                <Content>
+                    <Grid>
+                        <Col style={{ backgroundColor: '#635DB7', height: 700 }}></Col>
+                        <Col style={{ backgroundColor: '#00CE9F', height: 700 }}></Col>
+                    </Grid>
 
-                <Divider style={{ backgroundColor: 'blue' }} />
 
-                <View style={styles.firstContainer}>
-                    <View style={styles.oneThird}>
-                        <RoundButton color="green" title="-" fontSize={20} onPress={()=> this.handleRepsChange(-1)}/>
-                    </View>
-                    <View style={styles.oneThird}>
-                        <Text h1 style={{textAlign: 'center'}}>{this.state.reps}reps</Text>
-                    </View>
-                    <View style={styles.oneThird}>
-                        <RoundButton color="green" title="+" fontSize={20} onPress={()=> this.handleRepsChange(1)}/>
-                    </View>
-                </View>
-                <Button backgroundColor='blue'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='Salveaza seria'
-                    onPress={()=> this.handleSaveSerie()}/>
-            </View>
+                </Content>
+            </Container>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    firstContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    oneThird: {
-        flex: 1
-    }
-})
 
 export default SerieScreen;

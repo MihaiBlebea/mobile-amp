@@ -1,16 +1,34 @@
 import React from 'react';
 
+import * as store from '../../localStore/exports.js';
 import { View,
          ScrollView } from 'react-native';
 import { TitleCard, Loader } from '../../components/exports.js';
 import { Wrap } from '../../containers/exports.js';
-import { Card, Button, Text, Icon, List, ListItem } from 'react-native-elements'
-import * as store from '../../localStore/exports.js';
+import { List, ListItem } from 'react-native-elements'
+import { Container,
+        Header,
+        Title,
+        Content,
+        Card,
+        CardItem,
+        Thumbnail,
+        Footer,
+        Button,
+        FooterTab,
+        Left,
+        Right,
+        Body,
+        Icon,
+        Text,
+        Toast,
+        Spinner} from 'native-base';
 
 class ProgramScreen extends React.Component
 {
     state = {
-        program: null
+        program: null,
+        toggleDetails: false
     }
 
     componentDidMount()
@@ -22,6 +40,13 @@ class ProgramScreen extends React.Component
     {
         store.getProgram(this.props.navigation.state.params.programId, (program)=> {
             this.setState({ program: program })
+        })
+    }
+
+    handleToggleDetails()
+    {
+        this.setState({
+            toggleDetails: !this.state.toggleDetails
         })
     }
 
@@ -38,49 +63,70 @@ class ProgramScreen extends React.Component
     {
         if(this.state.program !== null)
         {
+            let details = (
+                <CardItem>
+                    <Body>
+                        <Text>
+                          { this.state.program.detalii }
+                        </Text>
+                    </Body>
+                </CardItem>
+            )
+
             return (
-                <Card title='Detalii Program'>
-                    <Text style={{marginBottom: 10}}>
-                        { this.state.program.detalii }
-                    </Text>
+                <Card>
+                    <CardItem button header onPress={()=> this.handleToggleDetails()}>
+                        <Left>
+                            <Text>Detalii program</Text>
+                        </Left>
+                        <Right>
+                            {(this.state.toggleDetails) ? <Icon name="arrow-up" /> : <Icon name="arrow-down" />}
+                        </Right>
+                    </CardItem>
+                    { (this.state.toggleDetails) ? details : null }
                 </Card>
             );
         } else {
-            return ( <Loader isLoading={true}/> );
+            return ( <Spinner /> );
         }
     }
 
-    constructProgramList()
+    constructDaysList()
     {
         if(this.state.program !== null)
         {
-            return  Object.values(this.state.program.zile).map((item, i) => {
+            return  Object.values(this.state.program.zile).map((item, key) => {
                 return (
-                    <ListItem key={i}
-                        title={item.titlu}
-                        leftIcon={{ name: 'whatshot' }}
-                        onPress={()=> this.navigateToDay(item.id)} />
+                    <CardItem key={key} button onPress={()=> this.navigateToDay(item.id)}>
+                        <Left>
+                            <Icon active name="logo-googleplus" />
+                            <Text>{item.titlu}</Text>
+                        </Left>
+                        <Right>
+                            <Icon name="arrow-forward" />
+                        </Right>
+                    </CardItem>
                 )
             });
         } else {
-            return null;
+            return ( <Spinner /> );
         }
     }
 
     render()
     {
         return (
-            <View>
-                <ScrollView>
-                    <TitleCard textColor={'white'} bgColor={'red'} icon='whatshot' />
-                    { this.constructProgramCard() }
+            <Container>
+                <Content>
+                <TitleCard textColor={'white'} bgColor={'red'} icon='whatshot' />
                     <Wrap>
-                        <List>
-                            { this.constructProgramList() }
-                        </List>
+                        { this.constructProgramCard() }
+                        <Card>
+                            { this.constructDaysList() }
+                        </Card>
                     </Wrap>
-                </ScrollView>
-            </View>
+                </Content>
+            </Container>
         );
     }
 }
