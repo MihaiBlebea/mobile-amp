@@ -29,6 +29,7 @@ import { Container,
 class DayScreen extends React.Component
 {
     state = {
+        programID: null,
         day: null,
         log: null
     }
@@ -37,6 +38,10 @@ class DayScreen extends React.Component
     {
         let dayID = this.props.navigation.state.params.dayID;
         let programID = this.props.navigation.state.params.programID;
+
+        this.setState({
+            programID: programID
+        });
 
         this.handleGetDay(programID, dayID);
         this.handleInitLogDay(programID, dayID);
@@ -76,10 +81,10 @@ class DayScreen extends React.Component
     navigateToSerie(id)
     {
         this.props.navigation.navigate('Serie', {
-            dayID: this.state.dayID,
+            dayID: this.state.day.id,
             programID: this.state.programID,
             exID: id,
-            screenTitle: this.state.day.nume
+            screenTitle: this.state.day.titlu
         });
     }
 
@@ -142,7 +147,7 @@ class DayScreen extends React.Component
                                 <Icon name="arrow-forward" />
                             </Left>
                             <Body>
-                                <Text>reps</Text>
+                                <Text></Text>
                             </Body>
                             <Right>
                                 <Text>{serie.r} reps cu {serie.g} kg</Text>

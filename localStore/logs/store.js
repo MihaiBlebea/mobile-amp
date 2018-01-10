@@ -52,7 +52,6 @@ export const getLogs = (callback)=> {
 
 export const saveLogs = (logs, callback = null)=> {
     store.saveData(LOGS, logs, (result)=> {
-        console.log(logs)
         if(callback !== null)
         {
             callback(result);
@@ -128,18 +127,17 @@ export const getLogDay = (programID, dayID, callback)=> {
 
 // Serie functions
 
-export const setLogSerie = (programID, dayID, exerciseID, payload, callback = null)=> {
-    getLogDay(programID, dayID, (log)=> {
+export const setLogSerie = (programID, dayID, exerciseID, payload, callback)=> {
+    getLogDay(programID, dayID, (log, callback)=> {
         for(let i = 0; i < log.exercises.length; i++)
         {
             if(log.exercises[i].id == exerciseID)
             {
                 log.exercises[i].series.push(payload);
-                saveLog(log, (result)=> {
-                    if(callback !== null)
-                    {
-                        callback(result);
-                    }
+                saveLog(log, (result, callback)=> {
+                    console.log(result)
+                    console.log(callback)
+                    callback(result)
                 })
             }
         }

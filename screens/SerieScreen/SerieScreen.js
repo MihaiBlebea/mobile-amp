@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as localStore from '../../localStore/localStore.js';
+import * as store from '../../localStore/exports.js';
 import { Wrap } from '../../containers/exports.js';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container,
@@ -21,7 +21,8 @@ import { Container,
         Toast,
         Spinner,
         List,
-        ListItem} from 'native-base';
+        ListItem,
+        Badge} from 'native-base';
 
 
 class SerieScreen extends React.Component
@@ -70,19 +71,15 @@ class SerieScreen extends React.Component
 
     handleSaveSerie()
     {
-        this.props.navigation.goBack();
+        let foo = this.props.navigation;
+        store.setLogSerie(this.state.programID, this.state.dayID, this.state.exerciseID, {r: this.state.reps, g: this.state.weight}, (result)=> {
+            console.log('ceva', foo)
+            foo.navigate('Day', {
+                dayID: this.state.dayID,
+                programID: this.state.programID
+            });
+        });
     }
-
-    // navigateToDay()
-    // {
-    //     this.props.navigation.navigate('Day', {
-    //         exID: this.state.exerciseID,
-    //         dayID: this.state.dayID,
-    //         programID: this.state.programID,
-    //         reps: this.state.reps,
-    //         weight: this.state.weight
-    //     });
-    // }
 
     render()
     {
@@ -90,11 +87,54 @@ class SerieScreen extends React.Component
             <Container>
                 <Content>
                     <Grid>
-                        <Col style={{ backgroundColor: '#635DB7', height: 700 }}></Col>
-                        <Col style={{ backgroundColor: '#00CE9F', height: 700 }}></Col>
+                        <Col style={{ backgroundColor: '#635DB7' }}>
+                            <Wrap>
+                                <Button block success onPress={()=> this.handleWeightChange(-2.5)}><Text>{'-2.5 kg'}</Text></Button>
+                            </Wrap>
+                            <Wrap>
+                                <Button block success onPress={()=> this.handleWeightChange(-5)}><Text>{'-5 kg'}</Text></Button>
+                            </Wrap>
+                            <Wrap>
+                                <Button block success onPress={()=> this.handleWeightChange(-10)}><Text>{'-10 kg'}</Text></Button>
+                            </Wrap>
+                        </Col>
+                        <Col style={{justifyContent: 'center', alignItems: 'center'}}>
+                            <Text>{this.state.weight} kg</Text>
+                        </Col>
+                        <Col style={{ backgroundColor: '#00CE9F' }}>
+                            <Wrap>
+                                <Button block success onPress={()=> this.handleWeightChange(2.5)}><Text>{'2.5 kg'}</Text></Button>
+                            </Wrap>
+                            <Wrap>
+                                <Button block success onPress={()=> this.handleWeightChange(5)}><Text>{'5 kg'}</Text></Button>
+                            </Wrap>
+                            <Wrap>
+                                <Button block success onPress={()=> this.handleWeightChange(10)}><Text>{'10 kg'}</Text></Button>
+                            </Wrap>
+                        </Col>
                     </Grid>
-
-
+                    <Grid>
+                        <Col style={{ backgroundColor: '#00CE9F' }}>
+                            <Wrap>
+                                <Button block success onPress={()=> this.handleRepsChange(-1)}><Text>{'-1 rep'}</Text></Button>
+                            </Wrap>
+                        </Col>
+                        <Col style={{justifyContent: 'center', alignItems: 'center'}}>
+                            <Text>{this.state.reps} Rep</Text>
+                        </Col>
+                        <Col style={{ backgroundColor: '#00CE9F' }}>
+                            <Wrap>
+                                <Button block success onPress={()=> this.handleRepsChange(1)}><Text>{'1 rep'}</Text></Button>
+                            </Wrap>
+                        </Col>
+                    </Grid>
+                    <Grid>
+                        <Col style={{ backgroundColor: '#00CE9F' }}>
+                            <Wrap>
+                                <Button block success onPress={()=> this.handleSaveSerie()}><Text>Salveaza</Text></Button>
+                            </Wrap>
+                        </Col>
+                    </Grid>
                 </Content>
             </Container>
         );
